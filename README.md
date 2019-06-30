@@ -1,3 +1,6 @@
+learning websockets
+re-learning node
+
 To start the server:
 1. `cd server` (from root)
 2. `npm install`

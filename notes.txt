@@ -1,0 +1,41 @@
+resources:
+inspiration https://blog.logrocket.com/websockets-tutorial-how-to-go-real-time-with-node-and-react-8e4693fbf843/
+https://github.com/AvanthikaMeenakshi/node-websockets
+react side youtube https://www.youtube.com/watch?v=82GDkSFmEJc
+https://blog.logrocket.com/design-patterns-in-node-js/
+express and mongo https://www.youtube.com/watch?v=ZKwrOXl5TDI
+
+technical features:
+node
+express?
+websockets
+react
+
+
+steps:
+1. mkdir `learning-...`
+2. `npx create-react-app client`
+3. `mkdir server`
+4. cd server && npm init
+5. touch index.js
+6. npm i mongodb
+7. npm i express
+8. npm i websocket
+9. build front end ui
+10 . npm install @material-ui/core
+
+
+
+description:
+chat room app with impermanent users
+maybe you have to get a like in under 60 seconds
+maybe you can't get downvoted
+
+!!!!! different username per room?
+relearn mongodb??
+
+classes:
+users - name
+rooms - name
+messages - text, user_id, room_id
+users_rooms? (if i want favorite rooms or something)
