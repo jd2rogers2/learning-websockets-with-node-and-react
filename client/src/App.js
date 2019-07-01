@@ -16,8 +16,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: ['hi'],
-      rooms: ['soccer', 'king of the hill']
+      // {content: "hi", user_id: 1, id: 1}
+      // {username: "user1", room_id: 1, id: 1}
+      // {name: "room1", id: 1}
+      messages: [{content: "hi", user_id: 1, id: 1}],
+      rooms: [{name: "room1", id: 1}],
+      inputText: ''
     };
   }
 
@@ -43,8 +47,16 @@ class App extends React.Component {
         username: 'user1',
         content: msg
       }));
-      return {messages: [...prevState.messages, msg]};
+      return {
+        messages: [...prevState.messages, {content: msg}],
+        inputText: ''
+      };
     });
+  }
+
+  textInputUpdate = event => {
+    const newVal = event.target.value;
+    this.setState({inputText: newVal});
   }
 
   render() {
@@ -53,7 +65,7 @@ class App extends React.Component {
         <Container maxWidth="sm">
           <Paper style={{minHeight: '400px', paddingTop: '20px'}}>
             {this.state.messages.map(msg => (
-              <p>{msg}</p>
+              <p key={msg.id}>{msg.content}</p>
             ))}
           </Paper>
           <form onSubmit={this.newMsg}>
@@ -68,6 +80,8 @@ class App extends React.Component {
               InputLabelProps={{
                 shrink: true,
               }}
+              value={this.state.inputText}
+              onChange={this.textInputUpdate}
             />
             <Button type="submit" variant="contained" color="primary">
               Send
@@ -76,8 +90,8 @@ class App extends React.Component {
           <h3>rooms</h3>
           <List subheader={<li />}>
             {this.state.rooms.map(room => (
-              <ListItem button key={room}>
-                <ListItemText primary={room} />
+              <ListItem button key={room.name}>
+                <ListItemText primary={room.name} />
               </ListItem>
             ))}
           </List>
