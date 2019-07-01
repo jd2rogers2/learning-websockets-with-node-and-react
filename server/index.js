@@ -1,12 +1,15 @@
-// {content: "hi", user_id: 1, id: 1}
-// {username: "user1", room_id: 1, id: 1}
-// {name: "room1", id: 1}
+// {content: "hi", user_id: 1}
+// {username: "user1", room_id: 1}
+// {name: "room1"}
+// ids provided by mongodb
 
-const MONGO_URL = `mongodb+srv://joeyj:${MONGO_PWD}@learning-websockets-agm6f.mongodb.net/test?retryWrites=true&w=majority`;
 const WEBSOCKET_PORT = 8000;
 const webSocketServer = require('websocket').server;
 const server = require('http').createServer();
-const mongoClient = require('mongodb').MongoClient;
+
+const MONGO_URL = 'mongodb+srv://joeyj:' + process.env.MONGO_PWD + '@learning-websockets-agm6f.mongodb.net/test?retryWrites=true&w=majority';
+const MongoClient = require('mongodb').MongoClient;
+const client = new MongoClient(MONGO_URL, {useNewUrlParser: true});
 
 server.listen(WEBSOCKET_PORT);
 const wsServer = new webSocketServer({
@@ -21,15 +24,18 @@ wsServer.on('request', request => {
     // send to db and get db data back and then
     // connection.send('stuff to client')
     if (data.type === 'newMsg') {
-      // {useNewUrlParser: true}
-      mongoClient.connect(MONGO_URL, (err, db) => {
+      client.connect(err => {
         if (err) {
-          //error
+          console.log(err);
         } else {
-          console.log("connected to mongodb");
-          const messages = db.collection('messages').find({});
-          connection.send({type: 'msg', messages});
+          //, userId: data.userId});
+          client.db('learning-websockets').collection('messages').insertOne({content: data.content}).then(resp => {
+            const newMsg = resp.ops[0];
+            connection.send(JSON.stringify({type: 'newMsg', message: newMsg}));
+          });
+          // console.log(messages);
         }
+        client.close();
       })
     }
   });
