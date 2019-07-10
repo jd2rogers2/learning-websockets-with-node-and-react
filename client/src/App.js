@@ -21,10 +21,10 @@ class App extends React.Component {
     return (
       <div className="App">
         {this.state.room._id ? (
-          <Room roomName={this.state.room} />
-        )
-          <Home />
-        )
+          <Room room={this.state.room} />
+        ) : (
+          <Home setRoom={this.setRoom} />
+        )}
       </div>
     );
   }

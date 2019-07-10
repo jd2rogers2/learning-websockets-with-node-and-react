@@ -1,27 +1,33 @@
 import React from 'react';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      rooms: []
+    };
   }
 
   componentWillMount() {
-    this.getRooms();
+    this.setRooms();
   }
 
-  getRooms = () => {
-    fetch('localhost:8000/rooms', {
-      accept: 'application/json',
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'same-origin'
-    }).then(response => response.json()).then(data => {
-      debugger;
-      this.setState({rooms: data});
-    });
+  setRooms = () => {
+    // fetch('localhost:8000/rooms', {
+    //   accept: 'application/json',
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   credentials: 'same-origin'
+    // }).then(response => response.json()).then(data => {
+    //   debugger;
+    //   this.setState({rooms: data});
+    // });
+      this.setState({rooms: [{name: 'room 1', _id: 1}, {name: 'room 2', _id: 2}]});
   };
 
   render() {
@@ -36,7 +42,7 @@ class Home extends React.Component {
         </p>
         <List subheader={<li />}>
           {this.state.rooms.map(room => (
-            <ListItem button key={room.name}>
+            <ListItem button key={room.name} onClick={() => this.props.setRoom(room)}>
               <ListItemText primary={room.name} />
             </ListItem>
           ))}

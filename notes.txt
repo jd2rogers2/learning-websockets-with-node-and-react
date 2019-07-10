@@ -1,3 +1,11 @@
+to dos:
++ finish current FE component re-architecture
++ write test for when newMsg is called, that listener
+  should be called with data coming back from server
++ add pop up for adding user
++ add likes
++ creating rooms
+
 resources:
 inspiration https://blog.logrocket.com/websockets-tutorial-how-to-go-real-time-with-node-and-react-8e4693fbf843/
 https://github.com/AvanthikaMeenakshi/node-websockets
@@ -22,7 +30,7 @@ steps:
 7. npm i express
 8. npm i websocket
 9. build front end ui
-10 . npm install @material-ui/core
+10. npm install @material-ui/core
 
 
 

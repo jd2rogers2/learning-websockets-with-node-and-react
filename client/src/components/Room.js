@@ -3,9 +3,6 @@ import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import { w3cwebsocket } from "websocket";
 
 const client = new w3cwebsocket('ws://127.0.0.1:8000');
@@ -24,11 +21,13 @@ class Room extends React.Component {
   }
 
   componentWillMount() {
-    this.getMessages();
+    // this.getMessages();
 
+    // below doesn't run anymore?
     client.onopen = () => {
       console.log('websockets running');
     };
+
     client.onmessage = resp => {
       const data = JSON.parse(resp.data);
       if (data.type === 'newMsg') {
