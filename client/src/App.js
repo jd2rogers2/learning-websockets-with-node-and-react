@@ -8,7 +8,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rooms: [{name: "room1", _id: 1}],
       room: {}
     };
   }
@@ -21,7 +20,7 @@ class App extends React.Component {
     return (
       <div className="App">
         {this.state.room._id ? (
-          <Room room={this.state.room} />
+          <Room room={this.state.room} setRoom={this.setRoom} />
         ) : (
           <Home setRoom={this.setRoom} />
         )}

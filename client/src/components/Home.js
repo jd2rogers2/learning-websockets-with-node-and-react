@@ -7,27 +7,26 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rooms: []
+      rooms: [{name: "room 1", _id: "5d277dba1c9d440000da4b16"}]
     };
   }
 
   componentWillMount() {
-    this.setRooms();
+    // this.setRooms();
   }
 
   setRooms = () => {
-    // fetch('localhost:8000/rooms', {
-    //   accept: 'application/json',
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   credentials: 'same-origin'
-    // }).then(response => response.json()).then(data => {
-    //   debugger;
-    //   this.setState({rooms: data});
-    // });
-      this.setState({rooms: [{name: 'room 1', _id: 1}, {name: 'room 2', _id: 2}]});
+    fetch('localhost:8000/rooms', {
+      accept: 'application/json',
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin'
+    }).then(response => response.json()).then(data => {
+      debugger;
+      this.setState({rooms: data});
+    });
   };
 
   render() {

@@ -1,10 +1,12 @@
 to dos:
-+ finish current FE component re-architecture
-+ write test for when newMsg is called, that listener
-  should be called with data coming back from server
++ write tests
+-- when newMsg is called, that listener
+   should be called with data coming back from server
 + add pop up for adding user
 + add likes
++ box on the side of room with users, active at top
 + creating rooms
++ styling
 
 resources:
 inspiration https://blog.logrocket.com/websockets-tutorial-how-to-go-real-time-with-node-and-react-8e4693fbf843/

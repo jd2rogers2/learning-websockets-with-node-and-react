@@ -12,8 +12,6 @@ class Room extends React.Component {
     super(props);
 
     this.state = {
-      // {content: "hi", user_id: 1, id: 1}
-      // {username: "user1", room_id: 1, id: 1}
       messages: [{content: "hi", user_id: 1, _id: 1}],
       // users: [{name: 'joeyj', _id: 1}],
       inputText: ''
@@ -36,7 +34,19 @@ class Room extends React.Component {
           inputText: ''
         }));
       }
+
+      if (data.type === 'getMessages') {
+        this.setState(prevState => ({
+          messages: [...prevState.messages, ...data.messages],
+          inputText: ''
+        }));
+      }
     };
+
+    client.send(JSON.stringify({
+      type: 'getMessages',
+      room_id: this.props.room.id
+    }));
   }
 
   newMsg = event => {
@@ -72,6 +82,8 @@ class Room extends React.Component {
     return (
       <div className="Home">
         <Container maxWidth="sm">
+        <Button type="submit" variant="contained" onClick={() => this.props.setRoom({})} color="primary">Leave</Button>
+          <h3>welcome to {this.props.room.name}!</h3>
           <Paper style={{minHeight: '400px', paddingTop: '20px'}}>
             {this.state.messages.map(msg => (
               <p key={msg._id}>{msg.content}</p>
