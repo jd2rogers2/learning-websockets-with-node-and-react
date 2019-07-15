@@ -1,7 +1,9 @@
 to dos:
 + write tests
--- when newMsg is called, that listener
+-- when newMsg is called, assert that listener
    should be called with data coming back from server
++ adding rooms
++ close websockets on componentDidUnmount?
 + add pop up for adding user
 + add likes
 + box on the side of room with users, active at top

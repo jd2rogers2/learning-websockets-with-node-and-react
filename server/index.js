@@ -28,11 +28,34 @@ mongoClient.connect(err => {
         const data = JSON.parse(message.utf8Data);
 
         if (data.type === 'newMsg') {
-          // , userId: data.userId});
-          mongoClient.db('learning-websockets').collection('messages').insertOne({content: data.content}).then(resp => {
+          mongoClient.db('learning-websockets').collection('messages').insertOne({content: data.content, liked: false, room: data.room, user: data.user}).then(resp => {
             const newMsg = resp.ops[0];
             console.log("new message sent to db successfully. id: " + newMsg._id);
             connection.send(JSON.stringify({type: 'newMsg', message: newMsg}));
+          }).catch(error => {
+            console.log(error);
+          });
+        } else if (data.type === 'getMessages') {
+          mongoClient.db('learning-websockets').collection('messages').find({room: data.room}).toArray((err, result) => {
+            if (err){
+              console.log(err);
+            } else {
+              console.log(`getMessages successful, sending ${result.length} messages to client. `);
+              connection.send(JSON.stringify({type: 'getMessages', messages: result}));
+            }
+          });
+        } else if (data.type === 'getRooms') {
+          mongoClient.db('learning-websockets').collection('messages').distinct("room").then(result => {
+            console.log(`getRooms successful, sending ${result.length} rooms to client. `);
+            connection.send(JSON.stringify({type: 'getRooms', rooms: result}));
+          }).catch(error => {
+            console.log(error);
+          });
+        } else if (data.type === 'newRoom') {
+          mongoClient.db('learning-websockets').collection('rooms').insertOne({name: data.name}).then(resp => {
+            const newRoom = resp.ops[0];
+            console.log("new room sent to db successfully. id: " + newRoom._id);
+            connection.send(JSON.stringify({type: 'newRoom', room: {name: newRoom}}));
           }).catch(error => {
             console.log(error);
           });
