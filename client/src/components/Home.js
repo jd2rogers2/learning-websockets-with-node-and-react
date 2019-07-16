@@ -18,8 +18,8 @@ class Home extends React.Component {
         </p>
         <List subheader={<li />}>
           {this.props.rooms.map(room => (
-            <ListItem button key={room} onClick={() => this.props.setRoom(room)}>
-              <ListItemText primary={room} />
+            <ListItem button key={room._id} onClick={() => this.props.setRoom(room.name)}>
+              <ListItemText primary={room.name} />
             </ListItem>
           ))}
         </List>

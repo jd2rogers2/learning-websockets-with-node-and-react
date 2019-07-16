@@ -12,11 +12,11 @@ class Room extends React.Component {
           <Button type="submit" variant="contained" onClick={() => this.props.setRoom('')} color="primary">Leave</Button>
           <h3>welcome to {this.props.room.name}!</h3>
           <Paper style={{minHeight: '400px', paddingTop: '20px'}}>
-            {this.props.messages.map(msg => (
-              <p key={msg._id}>{`${msg.user}: ${msg.content}`}</p>
+            {this.props.messages.map(message => (
+              <p key={message._id}>{`${message.user}: ${message.content}`}</p>
             ))}
           </Paper>
-          <form onSubmit={this.props.newMsg}>
+          <form onSubmit={this.props.newMessage}>
             <TextField
               label=''
               style={{ margin: 8 }}
@@ -28,8 +28,8 @@ class Room extends React.Component {
               InputLabelProps={{
                 shrink: true,
               }}
-              value={this.props.msgInput}
-              onChange={this.props.msgInputUpdate}
+              value={this.props.messageInput}
+              onChange={this.props.messageInputUpdate}
             />
             <Button type="submit" variant="contained" color="primary">Send</Button>
           </form>

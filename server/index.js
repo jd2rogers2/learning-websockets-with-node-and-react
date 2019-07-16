@@ -27,11 +27,11 @@ mongoClient.connect(err => {
       connection.on('message', message => {
         const data = JSON.parse(message.utf8Data);
 
-        if (data.type === 'newMsg') {
+        if (data.type === 'newMessage') {
           mongoClient.db('learning-websockets').collection('messages').insertOne({content: data.content, liked: false, room: data.room, user: data.user}).then(resp => {
-            const newMsg = resp.ops[0];
-            console.log("new message sent to db successfully. id: " + newMsg._id);
-            connection.send(JSON.stringify({type: 'newMsg', message: newMsg}));
+            const newMessage = resp.ops[0];
+            console.log("new message sent to db successfully. id: " + newMessage._id);
+            connection.send(JSON.stringify({type: 'newMessage', message: newMessage}));
           }).catch(error => {
             console.log(error);
           });
@@ -45,17 +45,20 @@ mongoClient.connect(err => {
             }
           });
         } else if (data.type === 'getRooms') {
-          mongoClient.db('learning-websockets').collection('messages').distinct("room").then(result => {
-            console.log(`getRooms successful, sending ${result.length} rooms to client. `);
-            connection.send(JSON.stringify({type: 'getRooms', rooms: result}));
-          }).catch(error => {
-            console.log(error);
+          mongoClient.db('learning-websockets').collection('rooms').find({}).toArray((err, result) => {
+            if (err){
+              console.log(err);
+            } else {
+              console.log(`getRooms successful, sending ${result.length} rooms to client. `);
+              connection.send(JSON.stringify({type: 'getRooms', rooms: result}));
+            }
           });
         } else if (data.type === 'newRoom') {
           mongoClient.db('learning-websockets').collection('rooms').insertOne({name: data.name}).then(resp => {
             const newRoom = resp.ops[0];
+            console.l
             console.log("new room sent to db successfully. id: " + newRoom._id);
-            connection.send(JSON.stringify({type: 'newRoom', room: {name: newRoom}}));
+            connection.send(JSON.stringify({type: 'newRoom', room: newRoom}));
           }).catch(error => {
             console.log(error);
           });

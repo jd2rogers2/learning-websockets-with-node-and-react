@@ -4,8 +4,9 @@ to dos:
    should be called with data coming back from server
 + adding rooms
 + close websockets on componentDidUnmount?
-+ add pop up for adding user
++ add users, pop up for adding user
 + add likes
++ TYPESCRIPT!!!!
 + box on the side of room with users, active at top
 + creating rooms
 + styling

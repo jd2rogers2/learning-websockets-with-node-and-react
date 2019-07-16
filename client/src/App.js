@@ -13,7 +13,7 @@ class App extends React.Component {
     this.state = {
       room: '',
       messages: [],
-      msgInput: '',
+      messageInput: '',
       roomInput: '',
       rooms: []
     };
@@ -22,15 +22,15 @@ class App extends React.Component {
   componentWillMount() {
     client.onmessage = resp => {
       const data = JSON.parse(resp.data);
-      if (data.type === 'newMsg') {
+      if (data.type === 'newMessage') {
         this.setState(prevState => ({
           messages: [...prevState.messages, data.message],
-          msgInput: ''
+          messageInput: ''
         }));
       } else if (data.type === 'getMessages') {
         this.setState(prevState => ({
           messages: [...data.messages],
-          msgInput: ''
+          messageInput: ''
         }));
       } else if (data.type === 'getRooms') {
         this.setState(prevState => ({
@@ -57,11 +57,11 @@ class App extends React.Component {
     // causes WebSocket is already in CLOSING or CLOSED state.
   }
 
-  newMsg = event => {
+  newMessage = event => {
     event.preventDefault();
     client.send(JSON.stringify({
-      type: 'newMsg',
-      content: event.target[1].value,
+      type: 'newMessage',
+      content: this.state.messageInput,
       room: this.state.room,
       user: "james"
     }));
@@ -71,13 +71,13 @@ class App extends React.Component {
     event.preventDefault();
     client.send(JSON.stringify({
       type: 'newRoom',
-      name: event.target[1].value
+      name: this.state.roomInput
     }));
   }
 
-  msgInputUpdate = event => {
+  messageInputUpdate = event => {
     const newVal = event.target.value;
-    this.setState({msgInput: newVal});
+    this.setState({messageInput: newVal});
   }
 
   roomInputUpdate = event => {
@@ -85,6 +85,7 @@ class App extends React.Component {
     this.setState({roomInput: newVal});
   }
 
+  // should be handle room click? this redirects to room component
   setRoom = room => {
     this.setState({room});
     client.send(JSON.stringify({
@@ -99,11 +100,11 @@ class App extends React.Component {
         {this.state.room ? (
           <Room
             room={this.state.room}
-            newMsg={this.newMsg}
+            newMessage={this.newMessage}
             setRoom={this.setRoom}
             messages={this.state.messages}
-            msgInputUpdate={this.msgInputUpdate}
-            msgInput={this.state.msgInput}
+            messageInputUpdate={this.messageInputUpdate}
+            messageInput={this.state.messageInput}
           />
         ) : (
           <Home
