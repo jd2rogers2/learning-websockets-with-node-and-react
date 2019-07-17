@@ -13,6 +13,9 @@ const wsServer = new webSocketServer({
   httpServer: server
 });
 
+const clients = {};
+let clientId = 0;
+
 mongoClient.connect(err => {
   if (err) {
     console.log(err);
@@ -20,6 +23,9 @@ mongoClient.connect(err => {
     console.log("mongodb connected");
     wsServer.on('request', request => {
       const connection = request.accept(null, request.origin);
+      // console.log("here");
+      // console.log(connection);
+      clients[++clientId] = connection;
 
       connection.on('message', message => {
         const data = JSON.parse(message.utf8Data);
@@ -30,7 +36,9 @@ mongoClient.connect(err => {
           messages.insertOne({content: data.content, liked: false, room: data.room, user: data.user}).then(resp => {
             const newMessage = resp.ops[0];
             console.log("new message sent to db successfully. id: " + newMessage._id);
-            connection.send(JSON.stringify({type: 'newMessage', message: newMessage}));
+            for (let key in clients) {
+              clients[key].send(JSON.stringify({type: 'newMessage', message: newMessage}));
+            }
           }).catch(error => {
             console.log(error);
           });
@@ -40,7 +48,9 @@ mongoClient.connect(err => {
               console.log(err);
             } else {
               console.log(`getMessages successful, sending ${result.length} messages to client. `);
-              connection.send(JSON.stringify({type: 'getMessages', messages: result}));
+              for (let key in clients) {
+                clients[key].send(JSON.stringify({type: 'getMessages', messages: result}));
+              }
             }
           });
         } else if (data.type === 'getRooms') {
@@ -49,14 +59,18 @@ mongoClient.connect(err => {
               console.log(err);
             } else {
               console.log(`getRooms successful, sending ${result.length} rooms to client. `);
-              connection.send(JSON.stringify({type: 'getRooms', rooms: result}));
+              for (let key in clients) {
+                clients[key].send(JSON.stringify({type: 'getRooms', rooms: result}));
+              }
             }
           });
         } else if (data.type === 'newRoom') {
           rooms.insertOne({name: data.name}).then(resp => {
             const newRoom = resp.ops[0];
             console.log("new room sent to db successfully. id: " + newRoom._id);
-            connection.send(JSON.stringify({type: 'newRoom', room: newRoom}));
+            for (let key in clients) {
+              clients[key].send(JSON.stringify({type: 'newRoom', room: newRoom}));
+            }
           }).catch(error => {
             console.log(error);
           });

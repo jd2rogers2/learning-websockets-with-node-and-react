@@ -3,6 +3,8 @@ to dos:
 -- when newMsg is called, assert that listener
    should be called with data coming back from server
 + close websockets on componentDidUnmount?
++ liking has to go through server too
++ text overflows on the top
 + TYPESCRIPT!!!!
 + hooks
 + apollo
