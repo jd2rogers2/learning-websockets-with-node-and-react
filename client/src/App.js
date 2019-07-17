@@ -41,6 +41,19 @@ class App extends React.Component {
           rooms: [...prevState.rooms, data.room],
           roomInput: ''
         }));
+      } else if (data.type === 'likeMessage') {
+        if (data.message.room === this.state.room) {
+          this.setState(prevState => {
+            return {
+              messages: prevState.messages.map(msg => {
+                if (msg._id === data.message._id) {
+                  return {...msg, liked: true};
+                }
+                return msg;
+              })
+            };
+          });
+        }
       }
     };
 
@@ -87,28 +100,22 @@ class App extends React.Component {
 
   // should be handle room click? this redirects to room component
   setRoom = room => {
-    this.setState({room});
-    client.send(JSON.stringify({
-      type: 'getMessages',
+    this.setState(prevState => ({
+      messages: [],
       room
     }));
+    if (room !== '') {
+      client.send(JSON.stringify({
+        type: 'getMessages',
+        room
+      }));
+    }
   }
 
-  likeMessage = id => {
-    this.setState(prevState => {
-      return {
-        messages: prevState.messages.map(msg => {
-          if (msg._id === id) {
-            return {...msg, liked: true};
-          }
-          return msg;
-        })
-      };
-    });
-
+  likeMessage = message => {
     client.send(JSON.stringify({
       type: 'likeMessage',
-      id
+      message
     }));
   }
 

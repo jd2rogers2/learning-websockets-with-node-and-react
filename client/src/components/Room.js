@@ -58,8 +58,8 @@ class Room extends React.Component {
   }
 
   likeMessage = message => {
-    if (this.state.user !== message.user) {
-      this.props.likeMessage(message._id);
+    if (this.state.user !== message.user && !message.liked) {
+      this.props.likeMessage(message);
     }
   }
 

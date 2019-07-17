@@ -75,10 +75,19 @@ mongoClient.connect(err => {
             console.log(error);
           });
         } else if (data.type === 'likeMessage') {
-          messages.updateOne({_id: new ObjectID(data.id)}, {$set: {"liked": true}}).then(resp => {
-            console.log(`message with id ${data.id} liked. `);
-          }).catch(error => {
-            console.log(error);
+          messages.updateOne({_id: new ObjectID(data.message._id)}, {$set: {"liked": true}}, (err, resp) => {
+            if (err) {
+              console.log(err);
+            } else {
+              if (resp.modifiedCount === 1) {
+                console.log(`message with id ${message._id} liked. `);
+                for (let key in clients) {
+                  clients[key].send(JSON.stringify({type: 'likeMessage', message: {...data.message, liked: true}}));
+                }
+              } else {
+                console.log("message found but no update made. ");
+              }
+            }
           });
         }
       });
