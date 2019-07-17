@@ -10,7 +10,7 @@ class Home extends React.Component {
     return (
       <div className="Home">
         <p>
-          Welcome to BLAH BLAH! Here's how this works...
+          Welcome to learning websockets, mongodb, and typescript app! Here's how this works...
           You choose a room and create a username when you get there,
           then you have to get a like within 60 seconds in order to stay.
           So bring some good contributions to the table and you'll be able
@@ -24,12 +24,10 @@ class Home extends React.Component {
           ))}
         </List>
         <br />
-        <h5>add a new room</h5>
         <form onSubmit={this.props.newRoom}>
           <TextField
             label=''
             style={{ margin: 8 }}
-            placeholder=""
             helperText=''
             fullWidth
             margin="normal"
@@ -37,6 +35,7 @@ class Home extends React.Component {
             InputLabelProps={{
               shrink: true,
             }}
+            placeholder="new room"
             value={this.props.roomInput}
             onChange={this.props.roomInputUpdate}
           />

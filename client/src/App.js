@@ -57,13 +57,13 @@ class App extends React.Component {
     // causes WebSocket is already in CLOSING or CLOSED state.
   }
 
-  newMessage = event => {
+  newMessage = (event, user) => {
     event.preventDefault();
     client.send(JSON.stringify({
       type: 'newMessage',
       content: this.state.messageInput,
       room: this.state.room,
-      user: "james"
+      user
     }));
   }
 
@@ -90,7 +90,25 @@ class App extends React.Component {
     this.setState({room});
     client.send(JSON.stringify({
       type: 'getMessages',
-      room: room
+      room
+    }));
+  }
+
+  likeMessage = id => {
+    this.setState(prevState => {
+      return {
+        messages: prevState.messages.map(msg => {
+          if (msg._id === id) {
+            return {...msg, liked: true};
+          }
+          return msg;
+        })
+      };
+    });
+
+    client.send(JSON.stringify({
+      type: 'likeMessage',
+      id
     }));
   }
 
@@ -105,6 +123,7 @@ class App extends React.Component {
             messages={this.state.messages}
             messageInputUpdate={this.messageInputUpdate}
             messageInput={this.state.messageInput}
+            likeMessage={this.likeMessage}
           />
         ) : (
           <Home

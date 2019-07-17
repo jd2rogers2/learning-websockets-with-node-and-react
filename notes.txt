@@ -2,11 +2,10 @@ to dos:
 + write tests
 -- when newMsg is called, assert that listener
    should be called with data coming back from server
-+ adding rooms
 + close websockets on componentDidUnmount?
-+ add users, pop up for adding user
-+ add likes
 + TYPESCRIPT!!!!
++ hooks
++ apollo
 + box on the side of room with users, active at top
 + creating rooms
 + styling
@@ -17,13 +16,17 @@ https://github.com/AvanthikaMeenakshi/node-websockets
 react side youtube https://www.youtube.com/watch?v=82GDkSFmEJc
 https://blog.logrocket.com/design-patterns-in-node-js/
 express and mongo https://www.youtube.com/watch?v=ZKwrOXl5TDI
+typescript https://www.youtube.com/watch?v=OkIDr8QSrLg
+node debugging https://www.youtube.com/watch?v=Xb_0awoShR8
+node mongo https://www.youtube.com/watch?v=Do_Hsb_Hs3c
+websockets react https://www.youtube.com/watch?v=V_6HVTdVHKI
+!!!making real time websockets https://www.youtube.com/watch?v=82GDkSFmEJc
 
 technical features:
 node
-express?
 websockets
 react
-
+typescript?
 
 steps:
 1. mkdir `learning-...`
@@ -45,7 +48,6 @@ maybe you have to get a like in under 60 seconds
 maybe you can't get downvoted
 
 !!!!! different username per room?
-relearn mongodb??
 
 classes:
 users - name

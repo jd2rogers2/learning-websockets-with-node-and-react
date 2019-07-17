@@ -1,12 +1,9 @@
-// {content: "hi", user_id: 1}
-// {username: "user1", room_id: 1}
-// {name: "room1"}
-// ids provided by mongodb
-
 const MONGO_URL = 'mongodb+srv://joeyj:' + process.env.MONGO_PWD + '@learning-websockets-agm6f.mongodb.net/test?retryWrites=true&w=majority';
 const mongoOptions = {useNewUrlParser: true, poolSize: 10, reconnectTries: Number.MAX_VALUE, reconnectInterval: 1000};
-const MongoClient = require('mongodb').MongoClient;
+const mongo = require('mongodb');
+const MongoClient = mongo.MongoClient;
 const mongoClient = new MongoClient(MONGO_URL, mongoOptions);
+const ObjectID = mongo.ObjectID;
 
 const WEBSOCKET_PORT = 8000;
 const webSocketServer = require('websocket').server;
@@ -26,9 +23,11 @@ mongoClient.connect(err => {
 
       connection.on('message', message => {
         const data = JSON.parse(message.utf8Data);
+        const messages = mongoClient.db('learning-websockets').collection('messages');
+        const rooms = mongoClient.db('learning-websockets').collection('rooms');
 
         if (data.type === 'newMessage') {
-          mongoClient.db('learning-websockets').collection('messages').insertOne({content: data.content, liked: false, room: data.room, user: data.user}).then(resp => {
+          messages.insertOne({content: data.content, liked: false, room: data.room, user: data.user}).then(resp => {
             const newMessage = resp.ops[0];
             console.log("new message sent to db successfully. id: " + newMessage._id);
             connection.send(JSON.stringify({type: 'newMessage', message: newMessage}));
@@ -36,7 +35,7 @@ mongoClient.connect(err => {
             console.log(error);
           });
         } else if (data.type === 'getMessages') {
-          mongoClient.db('learning-websockets').collection('messages').find({room: data.room}).toArray((err, result) => {
+          messages.find({room: data.room}).toArray((err, result) => {
             if (err){
               console.log(err);
             } else {
@@ -45,7 +44,7 @@ mongoClient.connect(err => {
             }
           });
         } else if (data.type === 'getRooms') {
-          mongoClient.db('learning-websockets').collection('rooms').find({}).toArray((err, result) => {
+          rooms.find({}).toArray((err, result) => {
             if (err){
               console.log(err);
             } else {
@@ -54,11 +53,16 @@ mongoClient.connect(err => {
             }
           });
         } else if (data.type === 'newRoom') {
-          mongoClient.db('learning-websockets').collection('rooms').insertOne({name: data.name}).then(resp => {
+          rooms.insertOne({name: data.name}).then(resp => {
             const newRoom = resp.ops[0];
-            console.l
             console.log("new room sent to db successfully. id: " + newRoom._id);
             connection.send(JSON.stringify({type: 'newRoom', room: newRoom}));
+          }).catch(error => {
+            console.log(error);
+          });
+        } else if (data.type === 'likeMessage') {
+          messages.updateOne({_id: new ObjectID(data.id)}, {$set: {"liked": true}}).then(resp => {
+            console.log(`message with id ${data.id} liked. `);
           }).catch(error => {
             console.log(error);
           });

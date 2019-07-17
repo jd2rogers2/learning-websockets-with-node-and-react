@@ -1,3 +1,15 @@
 .App {
   background-color:rgba(242,242,242);
 }
+
+li.isCurrentUser {
+  text-align: right;
+}
+
+span.isCurrentUser {
+  color: blue;
+}
+
+span.isNotCurrentUser {
+  color: red;
+}
