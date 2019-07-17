@@ -80,7 +80,7 @@ mongoClient.connect(err => {
               console.log(err);
             } else {
               if (resp.modifiedCount === 1) {
-                console.log(`message with id ${message._id} liked. `);
+                console.log(`message with id ${data.message._id} liked. `);
                 for (let key in clients) {
                   clients[key].send(JSON.stringify({type: 'likeMessage', message: {...data.message, liked: true}}));
                 }
