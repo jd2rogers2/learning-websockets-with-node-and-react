@@ -16,19 +16,17 @@ const wsServer = new webSocketServer({
 const clients = {};
 let clientId = 0;
 
-mongoClient.connect(err => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log("mongodb connected");
-    wsServer.on('request', request => {
-      const connection = request.accept(null, request.origin);
-      // console.log("here");
-      // console.log(connection);
-      clients[++clientId] = connection;
+wsServer.on('request', request => {
+  const connection = request.accept(null, request.origin);
+  clients[++clientId] = connection;
 
-      connection.on('message', message => {
-        const data = JSON.parse(message.utf8Data);
+  connection.on('message', message => {
+    const data = JSON.parse(message.utf8Data);
+    mongoClient.connect(err => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("mongodb connected");
         const messages = mongoClient.db('learning-websockets').collection('messages');
         const rooms = mongoClient.db('learning-websockets').collection('rooms');
 
@@ -90,7 +88,7 @@ mongoClient.connect(err => {
             }
           });
         }
-      });
+      }
     });
-  }
+  });
 });

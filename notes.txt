@@ -1,15 +1,25 @@
 to dos:
++ TYPESCRIPT!!!!
++ re-write server to only connect to mongo inside ws requests
 + write tests
 -- when newMsg is called, assert that listener
    should be called with data coming back from server
 + close websockets on componentDidUnmount?
 + text overflows on the top
-+ TYPESCRIPT!!!!
 + hooks
 + apollo
 + box on the side of room with users, active at top
 + creating rooms
 + styling
+
+learning typescript:
++ interfaces - like proptypes
+-- pass them in after Component<IProps>
++ npm install tslint tslint-react --save-dev
++ add tslint.json file
++ https://www.carlrippon.com/creating-a-react-and-typescript-project/
++
+
 
 resources:
 inspiration https://blog.logrocket.com/websockets-tutorial-how-to-go-real-time-with-node-and-react-8e4693fbf843/
@@ -41,7 +51,6 @@ steps:
 8. npm i websocket
 9. build front end ui
 10. npm install @material-ui/core
-
 
 
 description:
