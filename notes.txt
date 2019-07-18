@@ -19,6 +19,7 @@ https://blog.logrocket.com/design-patterns-in-node-js/
 express and mongo https://www.youtube.com/watch?v=ZKwrOXl5TDI
 typescript https://www.youtube.com/watch?v=OkIDr8QSrLg
 node debugging https://www.youtube.com/watch?v=Xb_0awoShR8
+^ fire! -- node --inspect index.js or process._debugProcess(add_an_id); if server already started
 node mongo https://www.youtube.com/watch?v=Do_Hsb_Hs3c
 websockets react https://www.youtube.com/watch?v=V_6HVTdVHKI
 !!!making real time websockets https://www.youtube.com/watch?v=82GDkSFmEJc
