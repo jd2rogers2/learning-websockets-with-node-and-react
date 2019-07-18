@@ -13,8 +13,13 @@ to dos:
 + styling
 
 learning typescript:
-+ interfaces - like proptypes
--- pass them in after Component<IProps>
++ interfaces - like proptypes, used for state too
+-- interface IProps {text: string; age?: number;}
+--- ? for optional
+-- pass them in after Component<IProps, IState>
+-- private state: IState = {
+-- handleChange = (e: React.FormEvent<HTMLInputElement>) => {}
+-- const { value }: {value: string} = event.target;
 + npm install tslint tslint-react --save-dev
 + add tslint.json file
 + https://www.carlrippon.com/creating-a-react-and-typescript-project/
