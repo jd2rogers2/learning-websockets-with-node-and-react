@@ -10,8 +10,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 
-class Room extends React.Component {
-  constructor(props) {
+class Room extends React.Component<IRoomProps, IRoomState> {
+  constructor(props: IRoomProps) {
     super(props);
     this.state = {
       user: '',
@@ -21,7 +21,7 @@ class Room extends React.Component {
     };
   }
 
-  setUser = event => {
+  setUser = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (this.props.messages.map(msg => msg.user).includes(this.state.userInput)) {
       this.setState({
@@ -52,12 +52,12 @@ class Room extends React.Component {
     }, 60000);
   }
 
-  userInputUpdate = event => {
+  userInputUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newVal = event.target.value;
     this.setState({userInput: newVal});
   }
 
-  likeMessage = message => {
+  likeMessage = (message: IMessage) => {
     if (this.state.user !== message.user && !message.liked) {
       this.props.likeMessage(message);
     }

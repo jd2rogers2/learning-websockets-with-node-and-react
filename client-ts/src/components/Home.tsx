@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-const Home = ({rooms, setRoom, newRoom, roomInput, roomInputUpdate}) => (
+export const Home: FunctionComponent<IHomeProps> = ({rooms, setRoom, newRoom, roomInput, roomInputUpdate}) => (
   <div className="Home">
     <p>
       Welcome to learning websockets, mongodb, and typescript app! Here's how this works...
@@ -41,6 +41,3 @@ const Home = ({rooms, setRoom, newRoom, roomInput, roomInputUpdate}) => (
     </form>
   </div>
 );
-
-
-export default Home;

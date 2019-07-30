@@ -1,16 +1,12 @@
 to dos:
 + TYPESCRIPT!!!!
-+ re-write server to only connect to mongo inside ws requests
++ rooms typing can be abstracted??
 + write tests
 -- when newMsg is called, assert that listener
    should be called with data coming back from server
 + close websockets on componentDidUnmount?
 + text overflows on the top
-+ hooks
-+ apollo
 + box on the side of room with users, active at top
-+ creating rooms
-+ styling
 
 learning typescript:
 + interfaces - like proptypes, used for state too
@@ -20,6 +16,7 @@ learning typescript:
 -- private state: IState = {
 -- handleChange = (e: React.FormEvent<HTMLInputElement>) => {}
 -- const { value }: {value: string} = event.target;
+-- find npm equivalent of yarn add -D @types/lodash (for types for imports)
 + npm install tslint tslint-react --save-dev
 + add tslint.json file
 + https://www.carlrippon.com/creating-a-react-and-typescript-project/

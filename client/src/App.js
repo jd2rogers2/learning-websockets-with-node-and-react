@@ -28,14 +28,14 @@ class App extends React.Component {
           messageInput: ''
         }));
       } else if (data.type === 'getMessages') {
-        this.setState(prevState => ({
+        this.setState({
           messages: [...data.messages],
           messageInput: ''
-        }));
+        });
       } else if (data.type === 'getRooms') {
-        this.setState(prevState => ({
+        this.setState({
           rooms: [...data.rooms]
-        }));
+        });
       } else if (data.type === 'newRoom') {
         this.setState(prevState => ({
           rooms: [...prevState.rooms, data.room],
@@ -100,10 +100,10 @@ class App extends React.Component {
 
   // should be handle room click? this redirects to room component
   setRoom = room => {
-    this.setState(prevState => ({
+    this.setState({
       messages: [],
       room
-    }));
+    });
     if (room !== '') {
       client.send(JSON.stringify({
         type: 'getMessages',
