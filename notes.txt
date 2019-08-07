@@ -1,6 +1,4 @@
 to dos:
-+ TYPESCRIPT!!!!
-+ rooms typing can be abstracted??
 + write tests
 -- when newMsg is called, assert that listener
    should be called with data coming back from server
